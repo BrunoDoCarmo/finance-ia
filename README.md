@@ -3,24 +3,24 @@
 Seja bem vindo ao meu projeto de "FINANCE-AI"
 
 ### CONFIGURAÇÕES
-## Criação do projeto
+#### Criação do projeto
 npx create-next-app@14.2.16 finance-ia
 
-## Rodar o projeto em desenvolvimento
+#### Rodar o projeto em desenvolvimento
 npm run dev
 
-## Instalação do ORM Prisma
+#### Instalação do ORM Prisma
 npm install prisma@5.21.1
 
 npx prisma init
 
-## Formatar o codígo do prisma
+#### Formatar o codígo do prisma
 npx prisma format
 
-## Migrates
+#### Migrates
 npx prisma migrate dev --name init_db
 
-## Tailwind
+#### Tailwind
 Para que as classes de estilização do tailwindcss fique padronizadas, iremos utilizar um plugins. Segue abaixo:
 
 {
