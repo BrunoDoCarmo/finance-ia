@@ -39,4 +39,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 npx create-next-app@14.2.16 finance-ia
 
 ## Instalação do ORM Prisma
-npm install prisma typescript ts-node @types/node --save-dev
+npm install prisma@5.21.1
+npx prisma init
+
+<!-- Formatar o codígo do prisma -->
+npx prisma format
