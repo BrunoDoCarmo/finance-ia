@@ -30,3 +30,16 @@ Para que as classes de estilização do tailwindcss fique padronizadas, iremos u
 Este código tem que ser colocado dentro de um arquivo com o seguinte nome ".prettierrc.json", que deve de ser criado na pasta raiz do projeto. Além disso precisa ter a extensão do prettier instalada no seu vscode.
 Nas configurações do vscode pesquise por "Default Formatter" e selecione o prettier, ainda nas configurações pesquise por "Format on Save".
 Isso serve para que quando salvar um arquivo do projeto ele selecione o tipo de formatação prettier
+
+#### Shadcn
+### Instalação
+npx shadcn@2.1.3 init
+
+### Qual tipo de estilo
+Selecione a opção default
+
+### Qual a coloração
+Selecione a opção Neutral
+
+### CSS Variables
+Sim
