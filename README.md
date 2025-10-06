@@ -4,7 +4,7 @@ Seja bem vindo ao meu projeto de "FINANCE-AI"
 
 ### CONFIGURAÇÕES
 #### Criação do projeto
-npx create-next-app@14.2.16 finance-ia
+npx create-next-app@14.2.16 [nome_do_projeto]
 
 #### Rodar o projeto em desenvolvimento
 npm run dev
@@ -18,7 +18,7 @@ npx prisma init
 npx prisma format
 
 #### Migrates
-npx prisma migrate dev --name init_db
+npx prisma migrate dev --name [nome_da_migrate]
 
 #### Tailwind
 Para que as classes de estilização do tailwindcss fique padronizadas, iremos utilizar um plugins. Segue abaixo:
@@ -43,3 +43,6 @@ Selecione a opção Neutral
 
 ### CSS Variables
 Sim
+
+### Instalando componentes
+npx shadcn@2.1.3 add [nome_do_componente]
