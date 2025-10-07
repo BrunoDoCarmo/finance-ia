@@ -46,3 +46,9 @@ Sim
 
 ### Instalando componentes
 npx shadcn@2.1.3 add [nome_do_componente]
+
+#### Clerk
+Serve para realizar login na sua aplicação
+
+### Instalação
+npm install @clerk/nextjs@5.7.5

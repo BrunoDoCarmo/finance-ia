@@ -1,4 +1,4 @@
-const trasactions = () => {
+const TrasactionsPage = () => {
   return <div>trasactions page</div>;
 }
-export default trasactions;
+export default TrasactionsPage;

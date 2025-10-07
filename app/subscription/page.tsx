@@ -1,4 +1,4 @@
-const subscription = () => {
+const SubscriptionPage = () => {
     return <div>subscription page</div>
 };
-export default subscription;
+export default SubscriptionPage;
