@@ -52,3 +52,10 @@ Serve para realizar login na sua aplicação
 
 ### Instalação
 npm install @clerk/nextjs@5.7.5
+
+#### Clerk Themes
+Clerk Themes
+
+### Instalação
+npm install @clerk/themes@2.1.37
+
