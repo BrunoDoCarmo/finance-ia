@@ -59,3 +59,13 @@ Clerk Themes
 ### Instalação
 npm install @clerk/themes@2.1.37
 
+#### Husky
+### Instalação
+npm install -D husky@9.1.6
+
+### Inicializar
+npx husky init
+
+#### Lint-staged
+### Instalação
+npm install -D lint-staged@12.3.2
