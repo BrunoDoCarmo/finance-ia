@@ -69,3 +69,8 @@ npx husky init
 #### Lint-staged
 ### Instalação
 npm install -D lint-staged@12.3.2
+
+
+npm install git-commit-msg-linter@5.0.8
+
+npx husky add .husky/commit-msg ".git/hooks/comit-msg \$1"
