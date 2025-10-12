@@ -14,6 +14,7 @@
     "@clerk/themes": "^2.1.37",
     "@prisma/client": "^5.21.1",
     "@radix-ui/react-slot": "^1.2.3",
+    "@tanstack/react-table": "^8.21.3",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
