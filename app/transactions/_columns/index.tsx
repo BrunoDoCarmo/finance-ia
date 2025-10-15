@@ -75,14 +75,16 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "actions",
     header: "Ações",
     cell: () => {
-      <div className="space-x-1">
-        <Button variant="ghost" size="icon" className="text-muted-foreground">
-          <PencilIcon />
-        </Button>
-        <Button variant="ghost" size="icon" className="text-muted-foreground">
-          <TrashIcon />
-        </Button>
-      </div>;
+      return (
+        <div className="space-x-1">
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <PencilIcon />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <TrashIcon />
+          </Button>
+        </div>
+      );
     },
   },
 ];
