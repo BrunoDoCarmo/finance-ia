@@ -103,3 +103,11 @@ npx husky add .husky/commit-msg ".git/hooks/comit-msg \$1"
 ### Instalação
 
 npm install @prisma/client@5.21.1
+
+#### Formatação de campo
+
+Para campos que vão conter valor de dinheiro utilizar a biblioteca, react-number-format
+
+### Instalação
+
+npm install react-number-format@5.4.2
