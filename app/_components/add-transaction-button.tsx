@@ -44,6 +44,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addTransaction } from "../_actions/add-transaction";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -53,8 +54,8 @@ const formSchema = z.object({
     .number({
       error: "O valor é obrigatório.",
     })
-    .positive({
-      message: "O valor deve ser positivo.",
+    .nonnegative({
+      message: "O valor deve ser maior ou igual a zero.",
     }),
   type: z.enum(TransactionType, {
     error: "O tipo é obrigatório",
@@ -73,6 +74,7 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 const AddTransactionButton = () => {
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -88,13 +90,17 @@ const AddTransactionButton = () => {
   const onSubmit = async (data: FormSchema) => {
     try {
       await addTransaction(data);
+      setDialogIsOpen(false);
+      form.reset();
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <Dialog
+      open={dialogIsOpen}
       onOpenChange={(open) => {
+        setDialogIsOpen(open);
         if (!open) {
           form.reset();
         }
