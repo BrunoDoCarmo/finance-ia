@@ -41,6 +41,11 @@ export const TRANSACTION_TYPE_OPTIONS = [
   },
 ];
 
+export const TRANSACTION_STATUS_DELETE_LABELS = {
+  ACTIVE: "Ativo",
+  DISABLED: "Desativado",
+};
+
 export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
   {
     value: TransactionPaymentMethod.BANK_TRANSFER,

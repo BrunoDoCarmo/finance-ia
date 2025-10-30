@@ -15,6 +15,7 @@ const TrasactionsPage = async () => {
   const transactions = await db.transaction.findMany({
     where: {
       userId,
+      statusDelete: "ACTIVE",
     },
   });
   return (
@@ -23,7 +24,7 @@ const TrasactionsPage = async () => {
       <div className="space-y-6 p-6">
         {/* TITULO E BOTÃO */}
         <div className="flex w-full items-center justify-between">
-          <h1 className="text-2xl font-bold">transações</h1>
+          <h1 className="text-2xl font-bold">Transações</h1>
           <AddTransactionButton />
         </div>
         <DataTable

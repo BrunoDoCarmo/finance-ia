@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import {
   TransactionCategory,
   TransactionPaymentMethod,
+  TransactionStatusDelete,
   TransactionType,
 } from "@prisma/client";
 import { upsertTransactionSchema } from "./schema";
@@ -20,6 +21,10 @@ interface UpsertTransactionParams {
   date: Date;
 }
 
+// interface deleteTransactionParams {
+//   id: string
+// }
+
 export const upsertTransaction = async (params: UpsertTransactionParams) => {
   upsertTransactionSchema.parse(params);
   const { userId } = await auth();
@@ -31,7 +36,7 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
     try {
       await db.transaction.upsert({
         where: {
-          id: params.id,
+          id: params.id ?? "",
         },
         update: baseData,
         create: baseData,
@@ -50,5 +55,20 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
       throw new Error("Falha ao criar nova transação");
     }
   }
+  revalidatePath("/transactions");
+};
+
+export const deleteTransaction = async (id: string) => {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  await db.transaction.updateMany({
+    where: { id },
+    data: { statusDelete: TransactionStatusDelete.DISABLED },
+  });
+
   revalidatePath("/transactions");
 };

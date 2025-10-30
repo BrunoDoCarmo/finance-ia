@@ -11,6 +11,7 @@ import {
 } from "@/app/_constants/transactions";
 import EditTransactionButton from "../_components/edit-transaction-button";
 import { Badge } from "@/app/_components/ui/badge";
+import { deleteTransaction } from "@/app/_actions/upsert-transaction";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -59,12 +60,23 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "actions",
     header: "Ações",
     cell: ({ row: { original: transaction } }) => {
+      const handleDelete = async () => {
+        try {
+          await deleteTransaction(transaction.id);
+          console.error();
+        } catch (error) {
+          console.log(error);
+        }
+      };
       return (
         <div className="flex flex-row justify-center space-x-1">
           <Badge className="bg-muted bg-opacity-10 font-bold text-primary hover:border-primary hover:bg-muted">
             <EditTransactionButton transaction={transaction} />
           </Badge>
-          <Badge className="bg-danger bg-opacity-10 font-bold text-danger hover:border-danger hover:bg-muted">
+          <Badge
+            className="bg-danger bg-opacity-10 font-bold text-danger hover:border-danger hover:bg-muted"
+            onClick={handleDelete}
+          >
             <Button
               variant="ghost"
               size="icon"

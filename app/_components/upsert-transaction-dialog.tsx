@@ -37,11 +37,12 @@ import {
   TransactionType,
   TransactionCategory,
   TransactionPaymentMethod,
+  TransactionStatusDelete,
 } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upsertTransaction } from "../_actions/upsert-transaction";
-
+import { useEffect } from "react";
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
   defaultValues?: FormSchema;
@@ -49,29 +50,34 @@ interface UpsertTransactionDialogProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
+type EnumType<T> = [T, ...T[]];
+
 const formSchema = z.object({
-  name: z.string().trim().min(1, {
-    message: "O nome é obrigatório",
-  }),
+  name: z.string().trim().min(1, { message: "O nome é obrigatório" }),
   amount: z
-    .number({
-      error: "O valor é obrigatório.",
-    })
-    .nonnegative({
-      message: "O valor deve ser maior ou igual a zero.",
-    }),
-  type: z.enum(TransactionType, {
+    .number({ error: "O valor é obrigatório." })
+    .nonnegative({ message: "O valor deve ser maior ou igual a zero." }),
+  type: z.enum(Object.values(TransactionType) as EnumType<TransactionType>, {
     error: "O tipo é obrigatório",
   }),
-  category: z.enum(TransactionCategory, {
-    error: "A categoria é obrigatória",
-  }),
-  paymentMethod: z.enum(TransactionPaymentMethod, {
-    error: "O método de pagamento é obrigatório",
-  }),
-  date: z.date({
-    error: "A data é obrigatória",
-  }),
+  category: z.enum(
+    Object.values(TransactionCategory) as EnumType<TransactionCategory>,
+    { error: "A categoria é obrigatória" },
+  ),
+  paymentMethod: z.enum(
+    Object.values(
+      TransactionPaymentMethod,
+    ) as EnumType<TransactionPaymentMethod>,
+    { error: "O método de pagamento é obrigatório" },
+  ),
+  date: z
+    .date({ error: "A data é obrigatória" })
+    .refine((val) => val instanceof Date && !isNaN(val.getTime()), {
+      message: "A data é obrigatórias",
+    }),
+  statusDelete: z.enum(
+    Object.values(TransactionStatusDelete) as EnumType<TransactionStatusDelete>,
+  ),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -91,8 +97,18 @@ const UpsertTransactionDialog = ({
       name: "",
       paymentMethod: TransactionPaymentMethod.CASH,
       type: TransactionType.EXPENSE,
+      statusDelete: TransactionStatusDelete.ACTIVE,
     },
   });
+
+  useEffect(() => {
+    if (defaultValues) {
+      form.reset({
+        ...defaultValues,
+        date: defaultValues.date ? new Date(defaultValues.date) : new Date(),
+      });
+    }
+  }, [defaultValues, form]);
 
   const onSubmit = async (data: FormSchema) => {
     try {
@@ -260,16 +276,19 @@ const UpsertTransactionDialog = ({
                 <FormField
                   control={form.control}
                   name="date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Data</FormLabel>
-                      <DatePicker
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    console.log(field.value);
+                    return (
+                      <FormItem>
+                        <FormLabel>Data</FormLabel>
+                        <DatePicker
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
               <DialogFooter className="mt-2 flex gap-y-3">

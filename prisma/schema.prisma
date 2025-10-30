@@ -24,6 +24,7 @@ model Transaction {
   createdAt     DateTime                 @default(now())
   updatedAt     DateTime                 @updatedAt
   userId        String
+  statusDelete  TransactionStatusDelete  @default(ACTIVE)
 }
 
 enum TransactionType {
@@ -52,4 +53,9 @@ enum TransactionPaymentMethod {
   CASH
   PIX
   OTHER
+}
+
+enum TransactionStatusDelete {
+  ACTIVE
+  DISABLED
 }
