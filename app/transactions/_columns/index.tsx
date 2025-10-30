@@ -10,6 +10,7 @@ import {
   TRANSACTION_PAYMENT_METHOD_LABELS,
 } from "@/app/_constants/transactions";
 import EditTransactionButton from "../_components/edit-transaction-button";
+import { Badge } from "@/app/_components/ui/badge";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -41,7 +42,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     cell: ({ row: { original: transaction } }) =>
       new Date(transaction.date).toLocaleDateString("pt-BR", {
         day: "2-digit",
-        month: "long",
+        month: "numeric",
         year: "numeric",
       }),
   },
@@ -59,11 +60,19 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     header: "Ações",
     cell: ({ row: { original: transaction } }) => {
       return (
-        <div className="space-x-1">
-          <EditTransactionButton transaction={transaction} />
-          <Button variant="ghost" size="icon" className="text-muted-foreground">
-            <TrashIcon />
-          </Button>
+        <div className="flex flex-row justify-center space-x-1">
+          <Badge className="bg-muted bg-opacity-10 font-bold text-primary hover:border-primary hover:bg-muted">
+            <EditTransactionButton transaction={transaction} />
+          </Badge>
+          <Badge className="bg-danger bg-opacity-10 font-bold text-danger hover:border-danger hover:bg-muted">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground"
+            >
+              <TrashIcon />
+            </Button>
+          </Badge>
         </div>
       );
     },

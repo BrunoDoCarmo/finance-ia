@@ -10,6 +10,35 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-0; /* Adjust width as needed */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-200;
+    /* background-color: hsl(var(--background)); */
+    border-radius: 9999px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--background));
+    border-radius: 9999px;
+    /* @apply rounded-full bg-blue-500; Thumb color and styling */
+  }
+  thead,
+  tbody {
+    white-space: nowrap;
+  }
+  thead,
+  tr,
+  th {
+    text-align: center !important;
+  }
+  tbody,
+  tr,
+  td {
+    padding: 0 0.5rem !important;
+  }
 }
 
 @layer base {
