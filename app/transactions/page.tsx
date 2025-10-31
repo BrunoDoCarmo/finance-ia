@@ -17,6 +17,7 @@ const TrasactionsPage = async () => {
       userId,
       statusDelete: "ACTIVE",
     },
+    orderBy: { date: "desc" },
   });
   return (
     <>
