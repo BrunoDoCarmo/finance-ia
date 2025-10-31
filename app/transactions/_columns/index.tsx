@@ -12,6 +12,17 @@ import {
 import EditTransactionButton from "../_components/edit-transaction-button";
 import { Badge } from "@/app/_components/ui/badge";
 import { deleteTransaction } from "@/app/_actions/upsert-transaction";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/_components/ui/alert-dialog";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -70,21 +81,44 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
       };
       return (
         <div className="flex flex-row justify-center space-x-1">
-          <Badge className="bg-muted bg-opacity-10 font-bold text-primary hover:border-primary hover:bg-muted">
+          {/* EDIÇÃO */}
+          <Badge className="cursor-pointer bg-muted bg-opacity-10 font-bold text-primary hover:border-primary hover:bg-muted">
             <EditTransactionButton transaction={transaction} />
           </Badge>
-          <Badge
-            className="bg-danger bg-opacity-10 font-bold text-danger hover:border-danger hover:bg-muted"
-            onClick={handleDelete}
-          >
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground"
-            >
-              <TrashIcon />
-            </Button>
-          </Badge>
+          {/* EXCLUSÃO */}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Badge className="cursor-pointer bg-danger bg-opacity-10 font-bold text-danger hover:border-danger hover:bg-muted">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground"
+                >
+                  <TrashIcon />
+                </Button>
+              </Badge>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Deseja realmente excluir esta transação?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Esta ação não poderá ser desfeita. A transação sera removida
+                  permanentemente do sistema
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  className="bg-danger text-white hover:bg-danger/80"
+                >
+                  Excluir
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       );
     },
