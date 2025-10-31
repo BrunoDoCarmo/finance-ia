@@ -35,11 +35,11 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
   if (params.id) {
     try {
       await db.transaction.upsert({
-        where: {
-          id: params.id ?? "",
-        },
         update: baseData,
         create: baseData,
+        where: {
+          id: params?.id ?? "",
+        },
       });
     } catch (error) {
       console.error("Erro ao executar upsert:", error);
