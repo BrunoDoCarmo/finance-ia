@@ -20,10 +20,23 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
   const currentYear = String(new Date().getFullYear());
 
+  const YEAR_OPTIONS = Array.from({ length: 11 }, (_, i) => {
+    const year = String(new Date().getFullYear() - i);
+    return { value: year, label: year };
+  });
+
+  // Verifica se o mês e ano são válidos (mês entre 01 e 12, ano numérico de 4 dígitos)
+  const isValidMonth =
+    month && /^[0-9]{2}$/.test(month) && +month >= 1 && +month <= 12;
+  const isValidYear =
+    year &&
+    /^[0-9]{4}$/.test(year) &&
+    YEAR_OPTIONS.some((option) => option.value === year);
+
   const validMonth = month && isMatch(month, "MM") ? month : currentMonth;
   const validYear = year && isMatch(year, "yyyy") ? year : currentYear;
 
-  if (!month || !year) {
+  if (!isValidMonth || !isValidYear) {
     redirect(`?month=${currentMonth}&year=${currentYear}`);
   }
   return (
@@ -34,7 +47,9 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
         </div>
-        <SummaryCards month={validMonth} year={validYear} />
+        <div className="grid grid-cols-[2fr,1fr]">
+          <SummaryCards month={validMonth} year={validYear} />
+        </div>
       </div>
     </>
   );
