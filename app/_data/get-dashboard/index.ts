@@ -1,6 +1,6 @@
 import { db } from "@/app/_lib/prisma";
-import { TransactionType } from "@prisma/client";
-import { TransactionPercentagePerType } from "./types";
+import { TransactionStatusDelete, TransactionType } from "@prisma/client";
+import { TotalExpensePerCategory, TransactionPercentagePerType } from "./types";
 
 export const getDashboard = async (month: string, year: string) => {
   const startDate = new Date(`${year}-${month}-01T00:00:00`);
@@ -15,7 +15,11 @@ export const getDashboard = async (month: string, year: string) => {
   const depositsTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { ...where, type: "DEPOSIT", statusDelete: "ACTIVE" },
+        where: {
+          ...where,
+          type: "DEPOSIT",
+          statusDelete: TransactionStatusDelete.ACTIVE,
+        },
         _sum: { amount: true },
       })
     )?._sum?.amount,
@@ -23,7 +27,11 @@ export const getDashboard = async (month: string, year: string) => {
   const investmentsTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { ...where, type: "INVESTMENT", statusDelete: "ACTIVE" },
+        where: {
+          ...where,
+          type: "INVESTMENT",
+          statusDelete: TransactionStatusDelete.ACTIVE,
+        },
         _sum: { amount: true },
       })
     )?._sum?.amount,
@@ -31,7 +39,11 @@ export const getDashboard = async (month: string, year: string) => {
   const expensesTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { ...where, type: "EXPENSE", statusDelete: "ACTIVE" },
+        where: {
+          ...where,
+          type: "EXPENSE",
+          statusDelete: TransactionStatusDelete.ACTIVE,
+        },
         _sum: { amount: true },
       })
     )?._sum?.amount,
@@ -40,7 +52,7 @@ export const getDashboard = async (month: string, year: string) => {
   const transactionsTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { ...where, statusDelete: "ACTIVE" },
+        where: { ...where, statusDelete: TransactionStatusDelete.ACTIVE },
         _sum: { amount: true },
       })
     )._sum.amount || 0,
@@ -57,11 +69,32 @@ export const getDashboard = async (month: string, year: string) => {
       (Number(investmentsTotal || 0) / Number(transactionsTotal)) * 100,
     ),
   };
+
+  const totalExpensePerCategory: TotalExpensePerCategory[] = (
+    await db.transaction.groupBy({
+      by: ["category"],
+      where: {
+        ...where,
+        type: TransactionType.EXPENSE,
+        statusDelete: TransactionStatusDelete.ACTIVE,
+      },
+      _sum: {
+        amount: true,
+      },
+    })
+  ).map((category) => ({
+    category: category.category,
+    totalAmount: Number(category._sum.amount),
+    percentageOfTotal: Math.round(
+      (Number(category._sum.amount) / Number(expensesTotal)) * 100,
+    ),
+  }));
   return {
     balance,
     depositsTotal,
     investmentsTotal,
     expensesTotal,
     typesPercentage,
+    totalExpensePerCategory,
   };
 };
