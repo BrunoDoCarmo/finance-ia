@@ -16,9 +16,13 @@ const SummaryCard = ({
   size = "small",
 }: SummaryCardProps) => {
   return (
-    <Card className={`${size === "large" ? "bg-white bg-opacity-5" : ""}`}>
-      <CardHeader className="flex-row items-center gap-4">
-        {icon}
+    <Card
+      className={`${size === "large" ? "bg-[rgba(255,255,255,0.05)]" : ""}`}
+    >
+      <CardHeader className="flex flex-row items-center gap-2">
+        <div className="flex-shrink-0 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-5 sm:[&>svg]:w-5">
+          {icon}
+        </div>
         <p
           className={`${size === "small" ? "text-muted-foreground" : "text-white opacity-70"}`}
         >
@@ -27,7 +31,7 @@ const SummaryCard = ({
       </CardHeader>
       <CardContent className="flex justify-between">
         <p
-          className={`font-bold ${size === "small" ? "text-2xl" : "text-4xl"}`}
+          className={`font-bold ${size === "small" ? "text-sm sm:text-2xl" : "text-xl sm:text-4xl"}`}
         >
           {Intl.NumberFormat("pt-BR", {
             style: "currency",
