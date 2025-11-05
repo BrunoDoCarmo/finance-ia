@@ -22,7 +22,7 @@ export const getDashboard = async (month: string, year: string) => {
         },
         _sum: { amount: true },
       })
-    )?._sum?.amount,
+    )?._sum?.amount || 0,
   );
   const investmentsTotal = Number(
     (
@@ -34,7 +34,7 @@ export const getDashboard = async (month: string, year: string) => {
         },
         _sum: { amount: true },
       })
-    )?._sum?.amount,
+    )?._sum?.amount || 0,
   );
   const expensesTotal = Number(
     (
@@ -46,7 +46,7 @@ export const getDashboard = async (month: string, year: string) => {
         },
         _sum: { amount: true },
       })
-    )?._sum?.amount,
+    )?._sum?.amount || 0,
   );
   const balance = depositsTotal - investmentsTotal - expensesTotal;
   const transactionsTotal = Number(
@@ -55,19 +55,33 @@ export const getDashboard = async (month: string, year: string) => {
         where: { ...where, statusDelete: TransactionStatusDelete.ACTIVE },
         _sum: { amount: true },
       })
-    )._sum.amount || 0,
+    )?._sum?.amount || 0,
   );
 
+  // const typesPercentage: TransactionPercentagePerType = {
+  //   [TransactionType.DEPOSIT]: transactionsTotal ? Math.round(
+  //     (Number(depositsTotal || 0) / Number(transactionsTotal)) * 100,
+  //   ) : 0,
+  //   [TransactionType.EXPENSE]: transactionsTotal ? Math.round(
+  //     (Number(expensesTotal || 0) / Number(transactionsTotal)) * 100,
+  //   ) : 0,
+  //   [TransactionType.INVESTMENT]: transactionsTotal ? Math.round(
+  //     (Number(investmentsTotal || 0) / Number(transactionsTotal)) * 100,
+  //   ) : 0,
+  // };
+
   const typesPercentage: TransactionPercentagePerType = {
-    [TransactionType.DEPOSIT]: Math.round(
-      (Number(depositsTotal || 0) / Number(transactionsTotal)) * 100,
-    ),
-    [TransactionType.EXPENSE]: Math.round(
-      (Number(expensesTotal || 0) / Number(transactionsTotal)) * 100,
-    ),
-    [TransactionType.INVESTMENT]: Math.round(
-      (Number(investmentsTotal || 0) / Number(transactionsTotal)) * 100,
-    ),
+    [TransactionType.DEPOSIT]: transactionsTotal
+      ? Number(((Number(balance || 0) / depositsTotal) * 100).toFixed(2))
+      : 0,
+    [TransactionType.EXPENSE]: transactionsTotal
+      ? Number(((Number(expensesTotal || 0) / depositsTotal) * 100).toFixed(2))
+      : 0,
+    [TransactionType.INVESTMENT]: transactionsTotal
+      ? Number(
+          ((Number(investmentsTotal || 0) / depositsTotal) * 100).toFixed(2),
+        )
+      : 0,
   };
 
   const totalExpensePerCategory: TotalExpensePerCategory[] = (

@@ -51,23 +51,45 @@ const TransactionPieChart = ({
     return <EmptyState />;
   }
 
+  const remainingDepositsTotal =
+    ((depositsTotal - investmentsTotal - expensesTotal) / depositsTotal) * 100;
+  const remainingExpensesTotal = (expensesTotal / depositsTotal) * 100;
+  const remainingInvestmentsTotal = (investmentsTotal / depositsTotal) * 100;
   const chartData = [
     {
       type: TransactionType.DEPOSIT,
-      amount: depositsTotal,
+      amount: remainingDepositsTotal,
       fill: "#55B02E",
     },
     {
       type: TransactionType.EXPENSE,
-      amount: expensesTotal,
+      amount: remainingExpensesTotal,
       fill: "#E93030",
     },
     {
       type: TransactionType.INVESTMENT,
-      amount: investmentsTotal,
+      amount: remainingInvestmentsTotal,
       fill: "#FFFFFF",
     },
   ];
+
+  // const chartData = [
+  //   {
+  //     type: TransactionType.DEPOSIT,
+  //     amount: depositsTotal,
+  //     fill: "#55B02E",
+  //   },
+  //   {
+  //     type: TransactionType.EXPENSE,
+  //     amount: expensesTotal,
+  //     fill: "#E93030",
+  //   },
+  //   {
+  //     type: TransactionType.INVESTMENT,
+  //     amount: investmentsTotal,
+  //     fill: "#FFFFFF",
+  //   },
+  // ];
 
   return (
     <Card className="flex flex-col">
