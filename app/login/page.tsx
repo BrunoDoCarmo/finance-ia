@@ -12,14 +12,14 @@ const LoginPage = async () => {
     redirect("/");
   }
   return (
-    <div className="relative flex h-full flex-col lg:grid lg:grid-cols-2">
+    <div className="relative flex h-full flex-col bg-black lg:grid lg:grid-cols-2">
       <RefreshOnLogin />
       {/* ESQUERDA */}
       <div className="relative z-10 flex h-screen w-full flex-col justify-center py-16 text-white lg:mx-auto lg:max-w-[550px] lg:px-10">
         <div className="flex flex-col items-center bg-black p-8 lg:items-start lg:bg-transparent">
           {/* LOGO */}
           <Image
-            src="/logo.svg"
+            src="/logo-light.svg"
             width={173}
             height={39}
             alt="Finance AI"
@@ -42,7 +42,7 @@ const LoginPage = async () => {
           <SignInButton>
             <Button
               variant="outline"
-              className="flex items-center gap-2 border-white hover:bg-white hover:text-black lg:border-gray-300"
+              className="flex items-center gap-2 border-white bg-black hover:bg-white hover:text-black lg:border-gray-300"
             >
               <LogInIcon className="h-5 w-5" />
               Fazer login ou criar conta
