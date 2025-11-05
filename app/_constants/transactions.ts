@@ -5,45 +5,45 @@ import {
 } from "@prisma/client";
 
 export const TRANSACTION_CATEGORY_LABELS = {
-  EDUCATION: "Educação",
-  ENTERTAINMENT: "Entretenimento",
-  FOOD: "Alimentação",
-  HEALTH: "Saúde",
-  HOUSING: "Moradia",
-  OTHER: "Outros",
-  SALARY: "Salário",
-  TRANSPORTATION: "Transporte",
-  UTILITY: "Utilidades",
+  EDUCATION: "EDUCAÇÃO",
+  ENTERTAINMENT: "ENTRETENIMENTO",
+  FOOD: "ALIMENTAÇÃO",
+  HEALTH: "SAÚDE",
+  HOUSING: "MORADIA",
+  OTHER: "OUTROS",
+  SALARY: "SALÁRIO",
+  TRANSPORTATION: "TRANSPORTE",
+  UTILITY: "UTILIDADES",
 };
 
 export const TRANSACTION_PAYMENT_METHOD_LABELS = {
-  BANK_TRANSFER: "Transferência Bancária",
-  BANK_SLIP: "Boleto Bancário",
-  CASH: "Dinheiro",
-  CREDIT_CARD: "Cartão de Crédito",
-  DEBIT_CARD: "Cartão de Débito",
-  OTHER: "Outros",
-  PIX: "Pix",
+  BANK_TRANSFER: "TRANSFERÊNCIA BANCARIA",
+  BANK_SLIP: "BOLETO BANCÁRIO",
+  CASH: "DINHEIRO",
+  CREDIT_CARD: "CARTÃO DE CRÉDITO",
+  DEBIT_CARD: "CARTÃO DE DÉBITO",
+  OTHER: "OUTROS",
+  PIX: "PIX",
 };
 
 export const TRANSACTION_TYPE_OPTIONS = [
   {
     value: TransactionType.EXPENSE,
-    label: "Despesa",
+    label: "DESPESA",
   },
   {
     value: TransactionType.DEPOSIT,
-    label: "Depósito",
+    label: "DEPÓSITO",
   },
   {
     value: TransactionType.INVESTMENT,
-    label: "Investimento",
+    label: "INVESTIMENTO",
   },
 ];
 
 export const TRANSACTION_STATUS_DELETE_LABELS = {
-  ACTIVE: "Ativo",
-  DISABLED: "Desativado",
+  ACTIVE: "ATIVO",
+  DISABLED: "DESATIVADO",
 };
 
 export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [

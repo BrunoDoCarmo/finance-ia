@@ -151,7 +151,11 @@ const UpsertTransactionDialog = ({
                     <FormItem>
                       <FormLabel>Nome</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite o nome..." {...field} />
+                        <Input
+                          placeholder="Digite o nome..."
+                          {...field}
+                          className="uppercase placeholder:uppercase"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

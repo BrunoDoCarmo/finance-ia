@@ -32,28 +32,52 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
     throw new Error("Unauthorized");
   }
   const baseData = { ...params, userId };
+
+  function toUpperCaseData<T extends Record<string, unknown>>(data: T): T {
+    const ignoreFields = ["id", "userId"];
+    return Object.fromEntries(
+      Object.entries(data).map(([key, value]) => [
+        key,
+        typeof value === "string" && !ignoreFields.includes(key)
+          ? value.toUpperCase()
+          : value,
+      ]),
+    ) as T;
+  }
+
+  const baseDataUpper = toUpperCaseData(baseData);
+  // if (params.id) {
+  //   try {
+  //     await db.transaction.upsert({
+  //       where: {
+  //         id: params?.id ?? "",
+  //       },
+  //       update: baseDataUpper,
+  //       create: baseDataUpper,
+  //     });
+  //   } catch (error) {
+  //     console.error("Erro ao executar upsert:", error);
+  //     throw new Error("Falha ao atualizar ou criar a transação");
+  //   }
+  // } else {
+  //   try {
+  //     await db.transaction.create({
+  //       data: baseDataUpper,
+  //     });
+  //   } catch (error) {
+  //     console.error("Erro ao criar transação:", error);
+  //     throw new Error("Falha ao criar nova transação");
+  //   }
+  // }
+
   if (params.id) {
-    try {
-      await db.transaction.upsert({
-        update: baseData,
-        create: baseData,
-        where: {
-          id: params?.id ?? "",
-        },
-      });
-    } catch (error) {
-      console.error("Erro ao executar upsert:", error);
-      throw new Error("Falha ao atualizar ou criar a transação");
-    }
+    await db.transaction.upsert({
+      where: { id: params.id },
+      update: baseDataUpper,
+      create: baseDataUpper,
+    });
   } else {
-    try {
-      await db.transaction.create({
-        data: baseData,
-      });
-    } catch (error) {
-      console.error("Erro ao criar transação:", error);
-      throw new Error("Falha ao criar nova transação");
-    }
+    await db.transaction.create({ data: baseDataUpper });
   }
   revalidatePath("/transactions");
 };
