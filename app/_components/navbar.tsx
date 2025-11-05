@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { UserButton } from "@clerk/nextjs";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { ThemedToggle } from "./themed-toggle";
+import ThemedLogo from "./themed-logo";
+import UserButtonComponent from "./user-button";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -21,13 +22,7 @@ const Navbar = () => {
       {/* ESQUERDA */}
       <div className="flex items-center gap-3">
         {/* LOGO */}
-        <Image
-          src="/logo.svg"
-          width={150}
-          height={40}
-          alt="Finance AI"
-          className="h-8 w-auto"
-        />
+        <ThemedLogo />
         {/* MENU PRINCIPAL - DESKTOP */}
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
@@ -48,7 +43,10 @@ const Navbar = () => {
       {/* DIREITA */}
       {/* USER BUTTON */}
       <div className="flex items-center gap-4">
-        <UserButton showName />
+        <div className="hidden md:flex md:gap-4">
+          <UserButtonComponent />
+          <ThemedToggle />
+        </div>
         {/* BOTÃO HAMBURGUER (mobile) */}
         <button
           className="rounded-lg p-2 hover:bg-muted md:hidden"
@@ -76,6 +74,12 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          <div className="w-full border-b px-4 py-3 text-sm">
+            <div className="flex flex-row items-center justify-between">
+              <UserButtonComponent />
+              <ThemedToggle />
+            </div>
+          </div>
         </div>
       )}
     </nav>

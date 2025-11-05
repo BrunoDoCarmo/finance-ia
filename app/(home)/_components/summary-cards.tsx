@@ -22,7 +22,7 @@ const SummaryCards = async ({
   expensesTotal,
 }: SummaryCards) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* PRIMEIRO CARD */}
 
       <SummaryCard
@@ -33,7 +33,7 @@ const SummaryCards = async ({
       />
 
       {/* OUTROS CARDS */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-3">
         <SummaryCard
           icon={<PiggyBankIcon size={16} />}
           title="Investido"
