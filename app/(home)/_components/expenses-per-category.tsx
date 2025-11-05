@@ -1,3 +1,4 @@
+import EmptyState from "@/app/_components/empty-state";
 import { CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import { Progress } from "@/app/_components/ui/progress";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
@@ -10,6 +11,10 @@ interface ExpensesPerCategoryProps {
 const ExpensesPerCategory = ({
   expersePerCategory,
 }: ExpensesPerCategoryProps) => {
+  const hasData = expersePerCategory && expersePerCategory.length > 0;
+  if (!hasData) {
+    return <EmptyState />;
+  }
   return (
     <ScrollArea className="col-span-2 h-full rounded-md border p-6">
       <CardHeader>
@@ -18,9 +23,9 @@ const ExpensesPerCategory = ({
       <CardContent>
         {expersePerCategory.map((category) => (
           <div key={category.category} className="space-y-2">
-            <div className="justify-between-w-full flex">
+            <div className="flex w-full justify-between">
               <p className="text-sm font-bold">{category.category}</p>
-              <p className="text-sm font-bold">{category.percentageOfTotal}</p>
+              <p className="text-sm font-bold">{category.percentageOfTotal}%</p>
             </div>
             <Progress value={category.percentageOfTotal} />
           </div>

@@ -13,6 +13,7 @@ import { TransactionType } from "@prisma/client";
 import { TransactionPercentagePerType } from "@/app/_data/get-dashboard/types";
 import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import PercentageItem from "./percentage-item";
+import EmptyState from "@/app/_components/empty-state";
 
 const chartConfig = {
   [TransactionType.INVESTMENT]: {
@@ -43,6 +44,13 @@ const TransactionPieChart = ({
   expensesTotal,
   typesPercentage,
 }: TransactionPieChartProps) => {
+  const hasData =
+    depositsTotal > 0 || investmentsTotal > 0 || expensesTotal > 0;
+
+  if (!hasData) {
+    return <EmptyState />;
+  }
+
   const chartData = [
     {
       type: TransactionType.DEPOSIT,
@@ -60,8 +68,9 @@ const TransactionPieChart = ({
       fill: "#FFFFFF",
     },
   ];
+
   return (
-    <Card className="flex flex-col p-10">
+    <Card className="flex flex-col">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
