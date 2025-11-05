@@ -109,7 +109,9 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogCancel className="border-gray-400 dark:border-white/10">
+                  Cancelar
+                </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleDelete}
                   className="bg-danger text-white hover:bg-danger/80"

@@ -49,7 +49,7 @@ const TimeSelect = () => {
   return (
     <div className="flex items-center gap-4">
       <Select onValueChange={handleMonthChange} defaultValue={month}>
-        <SelectTrigger className="w-[150px] rounded-full border-gray-400 p-6 dark:border-white/10">
+        <SelectTrigger className="w-[150px] rounded-full border-gray-400 dark:border-white/10">
           <SelectValue placeholder="Mês" />
         </SelectTrigger>
         <SelectContent>
@@ -61,7 +61,7 @@ const TimeSelect = () => {
         </SelectContent>
       </Select>
       <Select onValueChange={handleYearChange} defaultValue={year}>
-        <SelectTrigger className="w-[130px] rounded-full border-gray-400 p-6 dark:border-white/10">
+        <SelectTrigger className="w-[130px] rounded-full border-gray-400 dark:border-white/10">
           <SelectValue placeholder="Ano" />
         </SelectTrigger>
         <SelectContent>

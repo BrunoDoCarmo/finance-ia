@@ -18,21 +18,21 @@ const Navbar = () => {
     { href: "/subscription", label: "Assinatura" },
   ];
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between border-b border-solid bg-background px-6 py-4">
+    <nav className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-solid border-gray-400 bg-background px-6 py-4 dark:border-white/10">
       {/* ESQUERDA */}
       <div className="flex items-center gap-3">
         {/* LOGO */}
         <ThemedLogo />
         {/* MENU PRINCIPAL - DESKTOP */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`transaction-colors ${
+              className={`transaction-colors h-full px-3 py-5 transition-colors ${
                 pathname === link.href
-                  ? "font-bold text-primary"
-                  : "text-muted-foreground"
+                  ? "bg-primary/15 font-bold text-primary dark:bg-primary/20"
+                  : "hover:text-primary"
               }`}
             >
               {link.label}
@@ -68,7 +68,7 @@ const Navbar = () => {
               className={`w-full border-b px-6 py-3 text-sm ${
                 pathname === link.href
                   ? "font-bold text-primary"
-                  : "text-muted-foreground hover:text-primary"
+                  : "hover:text-primary"
               }`}
             >
               {link.label}

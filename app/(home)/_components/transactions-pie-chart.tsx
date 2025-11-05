@@ -92,7 +92,7 @@ const TransactionPieChart = ({
   // ];
 
   return (
-    <Card className="flex flex-col border-gray-400 p-6 dark:border-white/10">
+    <Card className="flex flex-col border-gray-400 dark:border-white/10">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}

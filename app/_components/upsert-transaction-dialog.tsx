@@ -293,7 +293,11 @@ const UpsertTransactionDialog = ({
               </div>
               <DialogFooter className="mt-2 flex gap-y-3">
                 <DialogClose asChild>
-                  <Button type="button" variant="outline">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="border-gray-400 dark:border-white/10"
+                  >
                     Cancelar
                   </Button>
                 </DialogClose>
