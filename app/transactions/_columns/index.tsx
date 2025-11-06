@@ -23,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog";
+import { formatCurrency } from "@/app/_utils/currency";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -62,10 +63,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "amount",
     header: "Valor",
     cell: ({ row: { original: transaction } }) =>
-      new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(Number(transaction.amount)),
+      formatCurrency(Number(transaction.amount)),
   },
   {
     accessorKey: "actions",
