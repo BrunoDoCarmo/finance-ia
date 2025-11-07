@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./_components/Providers";
+import { Providers } from "./_components/providers";
 
 const mulish = Mulish({
   subsets: ["latin-ext"],
@@ -20,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${mulish.className} antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="flex h-full flex-col overflow-hidden">{children}</div>
+        </Providers>
       </body>
     </html>
   );

@@ -48,7 +48,7 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   return (
     <>
       <Navbar />
-      <div className="space-y-6 p-6">
+      <div className="flex flex-col space-y-6 overflow-hidden p-6">
         <div className="flex h-6 w-full items-center justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
@@ -56,7 +56,7 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
         <div className="grid gap-3 overflow-hidden lg:grid-cols-[2fr,1fr]">
           <div className="flex flex-col gap-3 overflow-hidden">
             <SummaryCards month={validMonth} year={validYear} {...dashboard} />
-            <div className="flex h-full grid-rows-1 flex-col gap-3 overflow-auto lg:grid lg:grid-cols-3">
+            <div className="flex h-full grid-rows-1 flex-col gap-3 overflow-hidden lg:grid lg:grid-cols-3">
               <TransactionPieChart {...dashboard} />
               <ExpensesPerCategory
                 expersePerCategory={dashboard.totalExpensePerCategory}

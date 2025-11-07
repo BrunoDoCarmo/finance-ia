@@ -24,6 +24,7 @@ import {
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog";
 import { formatCurrency } from "@/app/_utils/currency";
+import { dateNumeric } from "@/app/_utils/date";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -52,12 +53,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "date",
     header: "Data",
-    cell: ({ row: { original: transaction } }) =>
-      new Date(transaction.date).toLocaleDateString("pt-BR", {
-        day: "2-digit",
-        month: "numeric",
-        year: "numeric",
-      }),
+    cell: ({ row: { original: transaction } }) => dateNumeric(transaction.date),
   },
   {
     accessorKey: "amount",
