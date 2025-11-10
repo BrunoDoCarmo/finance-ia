@@ -94,8 +94,8 @@ const TransactionPieChart = ({
 
   return (
     <ScrollArea className="rounded-md border border-gray-400 dark:border-white/10">
-      <Card className="flex flex-col">
-        <CardContent className="flex-1 pb-0">
+      <Card className="flex flex-col border-none shadow-none">
+        <CardContent className="flex-1 pb-[5px]">
           <ChartContainer
             config={chartConfig}
             className="mx-auto aspect-square max-h-[250px]"
@@ -113,7 +113,7 @@ const TransactionPieChart = ({
               />
             </PieChart>
           </ChartContainer>
-          <div className="space-y-4">
+          <div className="space-y-2">
             <PercentageItem
               icon={<TrendingUpIcon size={16} className="text-primary" />}
               title="RECEITA"

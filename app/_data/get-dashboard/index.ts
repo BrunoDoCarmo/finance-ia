@@ -2,6 +2,7 @@ import { db } from "@/app/_lib/prisma";
 import { TransactionStatusDelete, TransactionType } from "@prisma/client";
 import { TotalExpensePerCategory, TransactionPercentagePerType } from "./types";
 import { auth } from "@clerk/nextjs/server";
+import { Decimal } from "@prisma/client/runtime/library";
 
 export const getDashboard = async (month: string, year: string) => {
   const { userId } = await auth();
@@ -116,6 +117,11 @@ export const getDashboard = async (month: string, year: string) => {
     take: 10,
   });
 
+  const serializedLastTransaction = lastTransaction.map((t) => ({
+    ...t,
+    amount: t.amount instanceof Decimal ? t.amount.toNumber() : t.amount,
+  }));
+
   return {
     balance,
     depositsTotal,
@@ -123,6 +129,6 @@ export const getDashboard = async (month: string, year: string) => {
     expensesTotal,
     typesPercentage,
     totalExpensePerCategory,
-    lastTransaction,
+    serializedLastTransaction,
   };
 };

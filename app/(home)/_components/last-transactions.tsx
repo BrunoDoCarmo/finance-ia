@@ -8,12 +8,15 @@ import { formatCurrency } from "@/app/_utils/currency";
 import { TRANSACTION_PAYMENT_METHOD_ICONS } from "@/app/_constants/transactions";
 import { dateNumeric } from "@/app/_utils/date";
 
+type SerializedTransaction = Omit<Transaction, "amount"> & {
+  amount: number;
+};
 interface LastTransactionsProps {
-  lastTransactions: Transaction[];
+  lastTransactions: SerializedTransaction[];
 }
 
 const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
-  const getAmountColor = (transaction: Transaction) => {
+  const getAmountColor = (transaction: SerializedTransaction) => {
     if (transaction.type === "EXPENSE") {
       return "text-red-500";
     }
@@ -23,7 +26,7 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
     return "text-blue-600 dark:text-blue-300";
   };
 
-  const getAmountPrefix = (transaction: Transaction) => {
+  const getAmountPrefix = (transaction: SerializedTransaction) => {
     if (transaction.type === TransactionType.DEPOSIT) {
       return "+";
     }

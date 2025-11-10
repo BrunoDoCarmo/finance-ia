@@ -45,15 +45,16 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   }
 
   const dashboard = await getDashboard(validMonth, validYear);
+
   return (
     <>
       <Navbar />
-      <div className="flex flex-col space-y-6 overflow-hidden p-6">
+      <div className="flex flex-col space-y-6 p-6 md:overflow-hidden">
         <div className="flex h-6 w-full items-center justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
         </div>
-        <div className="grid gap-3 overflow-hidden lg:grid-cols-[2fr,1fr]">
+        <div className="grid gap-3 md:overflow-hidden lg:grid-cols-[2fr,1fr]">
           <div className="flex flex-col gap-3 overflow-hidden">
             <SummaryCards month={validMonth} year={validYear} {...dashboard} />
             <div className="flex h-full grid-rows-1 flex-col gap-3 overflow-hidden lg:grid lg:grid-cols-3">
@@ -63,7 +64,9 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
               />
             </div>
           </div>
-          <LastTransactions lastTransactions={dashboard.lastTransaction} />
+          <LastTransactions
+            lastTransactions={dashboard.serializedLastTransaction}
+          />
         </div>
       </div>
     </>
