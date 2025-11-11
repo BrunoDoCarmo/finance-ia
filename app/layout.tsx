@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   title: "Finance AI",
   description:
     "Gerencie suas finanças com inteligência artificial de forma rápida, prática e segura.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  manifest: "/manifest.json",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
