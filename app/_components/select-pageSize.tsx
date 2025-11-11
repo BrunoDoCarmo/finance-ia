@@ -12,7 +12,6 @@ import {
 const ITEMS_OPTIONS = [
   { value: "15", label: "15 itens" },
   { value: "25", label: "25 itens" },
-  { value: "25", label: "25 itens" },
   { value: "50", label: "50 itens" },
   { value: "100", label: "100 itens" },
   { value: "ALL", label: "Tudo" },
@@ -36,7 +35,7 @@ export default function PageSizeSelect({ pageSize }: SelectPageSizeProps) {
 
   return (
     <Select onValueChange={handleChange} value={pageSize}>
-      <SelectTrigger className="w-[150px] rounded-full border-gray-400 dark:border-white/10">
+      <SelectTrigger className="w-[110px] rounded-full border-gray-400 dark:border-white/10">
         <SelectValue placeholder="Itens" />
       </SelectTrigger>
 

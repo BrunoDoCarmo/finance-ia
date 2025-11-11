@@ -70,7 +70,8 @@ const TransactionPieChart = ({
     {
       type: TransactionType.INVESTMENT,
       amount: remainingInvestmentsTotal,
-      fill: "#FFFFFF",
+      fill: "currentColor",
+      className: "text-gray-400/70 dark:text-white",
     },
   ];
 

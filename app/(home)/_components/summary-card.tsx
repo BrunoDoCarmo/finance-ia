@@ -47,7 +47,17 @@ const SummaryCard = ({
           {formatCurrency(amount)}
         </p>
 
-        {size === "large" && <AddTransactionButton />}
+        {size === "large" && (
+          <>
+            <div className="hidden md:flex">
+              <AddTransactionButton showText={true} />
+            </div>
+
+            <div className="flex md:hidden">
+              <AddTransactionButton showText={false} />
+            </div>
+          </>
+        )}
       </CardContent>
     </Card>
   );

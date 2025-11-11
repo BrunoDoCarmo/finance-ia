@@ -1,11 +1,17 @@
 "use client";
 
-import { ArrowDownUpIcon } from "lucide-react";
+import { ArrowDownUpIcon, LucideCirclePlus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import UpsertTransactionDialog from "./upsert-transaction-dialog";
 
-const AddTransactionButton = () => {
+interface AddTransactionButtonProps {
+  showText?: boolean;
+}
+
+const AddTransactionButton = ({
+  showText = false,
+}: AddTransactionButtonProps) => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   return (
@@ -14,7 +20,11 @@ const AddTransactionButton = () => {
         className="rounded-full font-bold"
         onClick={() => setDialogIsOpen(true)}
       >
-        Adiconar Transação
+        <p className="flex sm:hidden">
+          <LucideCirclePlus />
+        </p>
+        {showText && <p>Adiconar Transação</p>}
+
         <ArrowDownUpIcon />
       </Button>
       <UpsertTransactionDialog
