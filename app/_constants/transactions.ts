@@ -4,14 +4,38 @@ import {
   TransactionType,
 } from "@prisma/client";
 
-export const TRANSACTION_PAYMENT_METHOD_ICONS = {
-  [TransactionPaymentMethod.CREDIT_CARD]: "credit-card.svg",
-  [TransactionPaymentMethod.DEBIT_CARD]: "debit-card.svg",
-  [TransactionPaymentMethod.BANK_TRANSFER]: "bank-transfer.svg",
-  [TransactionPaymentMethod.BANK_SLIP]: "bank-slip.svg",
-  [TransactionPaymentMethod.CASH]: "money.svg",
-  [TransactionPaymentMethod.PIX]: "pix.svg",
-  [TransactionPaymentMethod.OTHER]: "other.svg",
+export const TRANSACTION_PAYMENT_METHOD_ICONS: Record<
+  TransactionPaymentMethod,
+  { icon: string; color: string }
+> = {
+  [TransactionPaymentMethod.CREDIT_CARD]: {
+    icon: "/credit-card.svg",
+    color: "#1E90FF", // azul
+  },
+  [TransactionPaymentMethod.DEBIT_CARD]: {
+    icon: "/debit-card.svg",
+    color: "#32CD32", // verde
+  },
+  [TransactionPaymentMethod.BANK_TRANSFER]: {
+    icon: "/bank-transfer.svg",
+    color: "#8A2BE2", // roxo
+  },
+  [TransactionPaymentMethod.BANK_SLIP]: {
+    icon: "/bank-slip.svg",
+    color: "#FF8C00", // laranja
+  },
+  [TransactionPaymentMethod.CASH]: {
+    icon: "/money.svg",
+    color: "#228B22", // verde escuro
+  },
+  [TransactionPaymentMethod.PIX]: {
+    icon: "/pix.svg",
+    color: "#06B6D4", // ciano
+  },
+  [TransactionPaymentMethod.OTHER]: {
+    icon: "/other.svg",
+    color: "#808080", // cinza
+  },
 };
 
 export const TRANSACTION_CATEGORY_LABELS = {
