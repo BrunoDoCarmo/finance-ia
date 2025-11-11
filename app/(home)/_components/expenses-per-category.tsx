@@ -17,8 +17,8 @@ const ExpensesPerCategory = ({
     return <EmptyState />;
   }
   return (
-    <ScrollArea className="col-span-2 h-full rounded-md border border-gray-400 pb-6 dark:border-white/10">
-      <CardHeader>
+    <ScrollArea className="col-span-2 rounded-md border border-gray-400 dark:border-white/10">
+      <CardHeader className="flex-row items-center justify-between">
         <CardTitle className="font-bold">Gastos por Categoria</CardTitle>
       </CardHeader>
       <CardContent className="flex w-full flex-col gap-3">

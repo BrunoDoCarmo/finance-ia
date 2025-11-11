@@ -70,13 +70,17 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-bold">{transaction.name}</p>
+                  <p className="max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap text-sm font-bold md:max-w-[100%]">
+                    {transaction.name}
+                  </p>
                   <p className="text-sm text-muted-foreground">
                     {dateNumeric(transaction.date)}
                   </p>
                 </div>
               </div>
-              <p className={`text-sm font-bold ${getAmountColor(transaction)}`}>
+              <p
+                className={`whitespace-nowrap text-sm font-bold ${getAmountColor(transaction)}`}
+              >
                 {getAmountPrefix(transaction)}
                 {formatCurrency(Number(transaction.amount))}
               </p>
