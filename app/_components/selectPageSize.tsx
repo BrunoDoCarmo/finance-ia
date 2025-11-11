@@ -10,8 +10,6 @@ import {
 } from "./ui/select";
 
 const ITEMS_OPTIONS = [
-  { value: "6", label: "6 itens" },
-  { value: "10", label: "10 itens" },
   { value: "15", label: "15 itens" },
   { value: "25", label: "25 itens" },
   { value: "25", label: "25 itens" },
