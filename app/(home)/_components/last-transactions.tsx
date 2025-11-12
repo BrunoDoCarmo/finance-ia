@@ -6,6 +6,7 @@ import Link from "next/link";
 import { formatCurrency } from "@/app/_utils/currency";
 import { TRANSACTION_PAYMENT_METHOD_ICONS } from "@/app/_constants/transactions";
 import { dateNumeric } from "@/app/_utils/date";
+import EmptyState from "@/app/_components/empty-state";
 
 type SerializedTransaction = Omit<Transaction, "amount"> & {
   amount: number;
@@ -32,6 +33,11 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
     return "-";
   };
 
+  const hasData = lastTransactions.length > 0;
+
+  if (!hasData) {
+    return <EmptyState />;
+  }
   return (
     <ScrollArea className="rounded-md border border-gray-400 dark:border-white/10">
       <CardHeader className="flex-row items-center justify-between">
