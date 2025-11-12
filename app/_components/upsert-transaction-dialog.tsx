@@ -47,6 +47,7 @@ interface UpsertTransactionDialogProps {
   isOpen: boolean;
   defaultValues?: FormSchema;
   transactionId?: string;
+  defaultType?: TransactionType;
   setIsOpen: (isOpen: boolean) => void;
 }
 
@@ -87,6 +88,7 @@ const UpsertTransactionDialog = ({
   defaultValues,
   transactionId,
   setIsOpen,
+  defaultType = TransactionType.EXPENSE,
 }: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -96,7 +98,7 @@ const UpsertTransactionDialog = ({
       date: new Date(),
       name: "",
       paymentMethod: TransactionPaymentMethod.CASH,
-      type: TransactionType.EXPENSE,
+      type: defaultType,
       statusDelete: TransactionStatusDelete.ACTIVE,
     },
   });
@@ -109,6 +111,13 @@ const UpsertTransactionDialog = ({
       });
     }
   }, [defaultValues, form]);
+
+  useEffect(() => {
+    // Quando o modal abre e NÃO há transação em edição, define o tipo padrão
+    if (isOpen && !defaultValues) {
+      form.setValue("type", defaultType);
+    }
+  }, [isOpen, defaultType, form, defaultValues]);
 
   const onSubmit = async (data: FormSchema) => {
     try {

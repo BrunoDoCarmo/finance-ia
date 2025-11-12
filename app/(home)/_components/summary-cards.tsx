@@ -5,6 +5,7 @@ import {
   WalletIcon,
 } from "lucide-react";
 import SummaryCard from "./summary-card";
+import { TransactionType } from "@prisma/client";
 
 interface SummaryCards {
   month: string;
@@ -30,6 +31,7 @@ const SummaryCards = async ({
         title="SALDO"
         amount={balance}
         size="large"
+        type={TransactionType.INVESTMENT} // pode ser qualquer default, não abre modal aqui
       />
 
       {/* OUTROS CARDS */}
@@ -38,16 +40,19 @@ const SummaryCards = async ({
           icon={<PiggyBankIcon size={16} />}
           title="INVESTIDO"
           amount={investmentsTotal}
+          type={TransactionType.INVESTMENT}
         />
         <SummaryCard
           icon={<TrendingUpIcon size={16} className="text-primary" />}
           title="RECEITA"
           amount={depositsTotal}
+          type={TransactionType.DEPOSIT}
         />
         <SummaryCard
           icon={<TrendingDownIcon size={16} className="text-red-500" />}
           title="DESPESA"
           amount={expensesTotal}
+          type={TransactionType.EXPENSE}
         />
       </div>
     </div>

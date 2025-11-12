@@ -1,16 +1,19 @@
 "use client";
 
-import { ArrowDownUpIcon, LucideCirclePlus } from "lucide-react";
+import { ArrowDownUpIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import UpsertTransactionDialog from "./upsert-transaction-dialog";
+import { TransactionType } from "@prisma/client";
 
 interface AddTransactionButtonProps {
   showText?: boolean;
+  defaultType?: TransactionType;
 }
 
 const AddTransactionButton = ({
   showText = false,
+  defaultType,
 }: AddTransactionButtonProps) => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
@@ -20,16 +23,14 @@ const AddTransactionButton = ({
         className="rounded-full font-bold"
         onClick={() => setDialogIsOpen(true)}
       >
-        <p className="flex sm:hidden">
-          <LucideCirclePlus />
-        </p>
-        {showText && <p>Adiconar Transação</p>}
+        {showText && <p>Adicionar Transação</p>}
 
         <ArrowDownUpIcon />
       </Button>
       <UpsertTransactionDialog
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
+        defaultType={defaultType}
       />
     </>
   );
