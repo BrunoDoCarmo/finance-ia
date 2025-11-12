@@ -35,9 +35,6 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
 
   const hasData = lastTransactions.length > 0;
 
-  if (!hasData) {
-    return <EmptyState />;
-  }
   return (
     <ScrollArea className="rounded-md border border-gray-400 dark:border-white/10">
       <CardHeader className="flex-row items-center justify-between">
@@ -51,48 +48,52 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
         </Button>
       </CardHeader>
       <CardContent className="space-y-3">
-        {lastTransactions.map((transaction) => {
-          // eslint-disable-next-line react/jsx-key
-          const method =
-            TRANSACTION_PAYMENT_METHOD_ICONS[transaction.paymentMethod];
-          return (
-            <div
-              key={transaction.id}
-              className="flex items-center justify-between rounded-lg border border-gray-400 p-3 dark:border-white/10"
-            >
-              <div className="flex items-center gap-3">
-                <div className="rounded-lg bg-gray-300 p-3 dark:bg-white/10">
-                  <div
-                    className="h-5 w-5"
-                    style={{
-                      backgroundColor: method.color,
-                      maskImage: `url(${method.icon})`,
-                      maskSize: "contain",
-                      maskRepeat: "no-repeat",
-                      WebkitMaskImage: `url(${method.icon})`,
-                      WebkitMaskSize: "contain",
-                      WebkitMaskRepeat: "no-repeat",
-                    }}
-                  />
-                </div>
-                <div>
-                  <p className="max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap text-sm font-bold md:max-w-[100%]">
-                    {transaction.name}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {dateNumeric(transaction.date)}
-                  </p>
-                </div>
-              </div>
-              <p
-                className={`whitespace-nowrap text-sm font-bold ${getAmountColor(transaction)}`}
+        {!hasData ? (
+          <EmptyState />
+        ) : (
+          lastTransactions.map((transaction) => {
+            // eslint-disable-next-line react/jsx-key
+            const method =
+              TRANSACTION_PAYMENT_METHOD_ICONS[transaction.paymentMethod];
+            return (
+              <div
+                key={transaction.id}
+                className="flex items-center justify-between rounded-lg border border-gray-400 p-3 dark:border-white/10"
               >
-                {getAmountPrefix(transaction)}
-                {formatCurrency(Number(transaction.amount))}
-              </p>
-            </div>
-          );
-        })}
+                <div className="flex items-center gap-3">
+                  <div className="rounded-lg bg-gray-300 p-3 dark:bg-white/10">
+                    <div
+                      className="h-5 w-5"
+                      style={{
+                        backgroundColor: method.color,
+                        maskImage: `url(${method.icon})`,
+                        maskSize: "contain",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskImage: `url(${method.icon})`,
+                        WebkitMaskSize: "contain",
+                        WebkitMaskRepeat: "no-repeat",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <p className="max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap text-sm font-bold md:max-w-[100%]">
+                      {transaction.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {dateNumeric(transaction.date)}
+                    </p>
+                  </div>
+                </div>
+                <p
+                  className={`whitespace-nowrap text-sm font-bold ${getAmountColor(transaction)}`}
+                >
+                  {getAmountPrefix(transaction)}
+                  {formatCurrency(Number(transaction.amount))}
+                </p>
+              </div>
+            );
+          })
+        )}
       </CardContent>
     </ScrollArea>
   );

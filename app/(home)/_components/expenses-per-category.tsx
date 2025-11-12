@@ -13,26 +13,29 @@ const ExpensesPerCategory = ({
   expersePerCategory,
 }: ExpensesPerCategoryProps) => {
   const hasData = expersePerCategory && expersePerCategory.length > 0;
-  if (!hasData) {
-    return <EmptyState />;
-  }
   return (
     <ScrollArea className="col-span-2 rounded-md border border-gray-400 dark:border-white/10">
       <CardHeader className="flex-row items-center justify-between">
         <CardTitle className="font-bold">Gastos por Categoria</CardTitle>
       </CardHeader>
       <CardContent className="flex w-full flex-col gap-3">
-        {expersePerCategory.map((category) => (
-          <div key={category.category} className="space-y-1">
-            <div className="flex w-full justify-between">
-              <p className="text-sm font-bold">
-                {TRANSACTION_CATEGORY_LABELS[category.category]}
-              </p>
-              <p className="text-sm font-bold">{category.percentageOfTotal}%</p>
+        {!hasData ? (
+          <EmptyState />
+        ) : (
+          expersePerCategory.map((category) => (
+            <div key={category.category} className="space-y-1">
+              <div className="flex w-full justify-between">
+                <p className="text-sm font-bold">
+                  {TRANSACTION_CATEGORY_LABELS[category.category]}
+                </p>
+                <p className="text-sm font-bold">
+                  {category.percentageOfTotal}%
+                </p>
+              </div>
+              <Progress value={category.percentageOfTotal} />
             </div>
-            <Progress value={category.percentageOfTotal} />
-          </div>
-        ))}
+          ))
+        )}
       </CardContent>
     </ScrollArea>
   );

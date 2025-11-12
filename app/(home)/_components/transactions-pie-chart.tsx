@@ -2,7 +2,12 @@
 
 import { Pie, PieChart } from "recharts";
 
-import { Card, CardContent } from "@/app/_components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/_components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -48,10 +53,6 @@ const TransactionPieChart = ({
   const hasData =
     depositsTotal > 0 || investmentsTotal > 0 || expensesTotal > 0;
 
-  if (!hasData) {
-    return <EmptyState />;
-  }
-
   const remainingDepositsTotal =
     ((depositsTotal - investmentsTotal - expensesTotal) / depositsTotal) * 100;
   const remainingExpensesTotal = (expensesTotal / depositsTotal) * 100;
@@ -96,42 +97,51 @@ const TransactionPieChart = ({
   return (
     <ScrollArea className="rounded-md border border-gray-400 dark:border-white/10">
       <Card className="flex flex-col border-none shadow-none">
-        <CardContent className="flex-1 pb-[5px]">
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto aspect-square max-h-[250px]"
-          >
-            <PieChart>
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
+        <CardHeader className="flex-row items-center justify-between">
+          <CardTitle className="font-bold">Percentual</CardTitle>
+        </CardHeader>
+        {!hasData ? (
+          <CardContent className="flex w-full flex-col gap-3">
+            <EmptyState />
+          </CardContent>
+        ) : (
+          <CardContent className="flex-1 pb-[5px]">
+            <ChartContainer
+              config={chartConfig}
+              className="mx-auto aspect-square max-h-[250px]"
+            >
+              <PieChart>
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Pie
+                  data={chartData}
+                  dataKey="amount"
+                  nameKey="type"
+                  innerRadius={60}
+                />
+              </PieChart>
+            </ChartContainer>
+            <div className="space-y-2">
+              <PercentageItem
+                icon={<TrendingUpIcon size={16} className="text-primary" />}
+                title="RECEITA"
+                value={typesPercentage[TransactionType.DEPOSIT]}
               />
-              <Pie
-                data={chartData}
-                dataKey="amount"
-                nameKey="type"
-                innerRadius={60}
+              <PercentageItem
+                icon={<TrendingDownIcon size={16} className="text-red-500" />}
+                title="DESPESA"
+                value={typesPercentage[TransactionType.EXPENSE]}
               />
-            </PieChart>
-          </ChartContainer>
-          <div className="space-y-2">
-            <PercentageItem
-              icon={<TrendingUpIcon size={16} className="text-primary" />}
-              title="RECEITA"
-              value={typesPercentage[TransactionType.DEPOSIT]}
-            />
-            <PercentageItem
-              icon={<TrendingDownIcon size={16} className="text-red-500" />}
-              title="DESPESA"
-              value={typesPercentage[TransactionType.EXPENSE]}
-            />
-            <PercentageItem
-              icon={<PiggyBankIcon size={16} />}
-              title="INVESTIDO"
-              value={typesPercentage[TransactionType.INVESTMENT]}
-            />
-          </div>
-        </CardContent>
+              <PercentageItem
+                icon={<PiggyBankIcon size={16} />}
+                title="INVESTIDO"
+                value={typesPercentage[TransactionType.INVESTMENT]}
+              />
+            </div>
+          </CardContent>
+        )}
       </Card>
     </ScrollArea>
   );
