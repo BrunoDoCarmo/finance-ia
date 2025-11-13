@@ -9,11 +9,13 @@ import { TransactionType } from "@prisma/client";
 interface AddTransactionButtonProps {
   showText?: boolean;
   defaultType?: TransactionType;
+  disabledTypeSelect?: boolean;
 }
 
 const AddTransactionButton = ({
   showText = false,
   defaultType,
+  disabledTypeSelect,
 }: AddTransactionButtonProps) => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
@@ -31,6 +33,7 @@ const AddTransactionButton = ({
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
         defaultType={defaultType}
+        disabledTypeSelect={disabledTypeSelect}
       />
     </>
   );

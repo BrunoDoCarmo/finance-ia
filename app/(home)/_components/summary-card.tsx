@@ -11,6 +11,7 @@ interface SummaryCardProps {
   amount: number;
   size?: "small" | "large";
   type: TransactionType;
+  disabled?: boolean;
 }
 
 const SummaryCard = ({
@@ -19,6 +20,7 @@ const SummaryCard = ({
   amount,
   size = "small",
   type,
+  disabled = false,
 }: SummaryCardProps) => {
   const isSmall = size === "small";
 
@@ -33,7 +35,11 @@ const SummaryCard = ({
         {/* Mobile */}
         <div className="flex flex-col items-center gap-2 md:hidden">
           {isSmall && (
-            <AddTransactionButton showText={false} defaultType={type} />
+            <AddTransactionButton
+              showText={false}
+              defaultType={type}
+              disabledTypeSelect={disabled}
+            />
           )}
 
           <div className="flex flex-row items-center gap-2">
@@ -67,7 +73,11 @@ const SummaryCard = ({
             </p>
           </div>
           {isSmall && (
-            <AddTransactionButton showText={false} defaultType={type} />
+            <AddTransactionButton
+              showText={false}
+              defaultType={type}
+              disabledTypeSelect={disabled}
+            />
           )}
         </div>
       </CardHeader>

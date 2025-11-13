@@ -41,18 +41,21 @@ const SummaryCards = async ({
           title="INVESTIDO"
           amount={investmentsTotal}
           type={TransactionType.INVESTMENT}
+          disabled={true}
         />
         <SummaryCard
           icon={<TrendingUpIcon size={16} className="text-primary" />}
           title="RECEITA"
           amount={depositsTotal}
           type={TransactionType.DEPOSIT}
+          disabled={true}
         />
         <SummaryCard
           icon={<TrendingDownIcon size={16} className="text-red-500" />}
           title="DESPESA"
           amount={expensesTotal}
           type={TransactionType.EXPENSE}
+          disabled={true}
         />
       </div>
     </div>

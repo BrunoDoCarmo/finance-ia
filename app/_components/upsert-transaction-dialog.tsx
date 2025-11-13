@@ -48,6 +48,7 @@ interface UpsertTransactionDialogProps {
   defaultValues?: FormSchema;
   transactionId?: string;
   defaultType?: TransactionType;
+  disabledTypeSelect?: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
@@ -56,8 +57,9 @@ type EnumType<T> = [T, ...T[]];
 const formSchema = z.object({
   name: z.string().trim().min(1, { message: "O nome é obrigatório" }),
   amount: z
-    .number({ error: "O valor é obrigatório." })
-    .nonnegative({ message: "O valor deve ser maior ou igual a zero." }),
+    .number({ message: "O valor é obrigatório." })
+    .min(0.001, { message: "O valor deve ser maior que zero." }),
+  // .nonnegative({ message: "O valor deve ser maior ou igual a zero." }),
   type: z.enum(Object.values(TransactionType) as EnumType<TransactionType>, {
     error: "O tipo é obrigatório",
   }),
@@ -89,6 +91,7 @@ const UpsertTransactionDialog = ({
   transactionId,
   setIsOpen,
   defaultType = TransactionType.EXPENSE,
+  disabledTypeSelect = false,
 }: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -208,6 +211,7 @@ const UpsertTransactionDialog = ({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={disabledTypeSelect}
                       >
                         <FormControl>
                           <SelectTrigger>
