@@ -16,6 +16,8 @@ const Navbar = () => {
     { href: "/", label: "Dashboard" },
     { href: "/transactions", label: "Transações" },
     { href: "/subscription", label: "Assinatura" },
+    { href: "/register", label: "Cadastro" },
+    { href: "/financial", label: "Financeiro" },
   ];
   return (
     <nav className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-solid border-gray-400 bg-background px-6 py-4 dark:border-white/10">

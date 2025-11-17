@@ -108,3 +108,10 @@ body {
     @apply h-full bg-background text-foreground;
   }
 }
+
+.payment-icon {
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+}
