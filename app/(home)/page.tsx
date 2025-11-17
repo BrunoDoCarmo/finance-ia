@@ -49,12 +49,12 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col space-y-6 p-6 md:overflow-hidden">
+      <div className="flex flex-col space-y-6 p-6 lg:overflow-hidden">
         <div className="flex h-6 w-full items-center justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
         </div>
-        <div className="grid gap-3 sm:grid-rows-[1fr] md:h-screen md:grid-cols-[2fr,1fr] md:overflow-hidden">
+        <div className="grid grid-rows-[1fr] gap-3 lg:h-screen lg:grid-cols-[2fr,1fr] lg:overflow-hidden">
           <div className="flex flex-col gap-3 overflow-hidden">
             <SummaryCards month={validMonth} year={validYear} {...dashboard} />
             <div className="flex h-full grid-rows-1 flex-col gap-3 overflow-hidden lg:grid lg:grid-cols-3">

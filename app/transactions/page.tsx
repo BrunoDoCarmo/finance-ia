@@ -23,7 +23,6 @@ import {
 } from "../_components/ui/alert-dialog";
 import { Button } from "../_components/ui/button";
 import { ListFilter } from "lucide-react";
-import RouterBack from "../_components/router-back";
 
 interface TransactionsPageProps {
   searchParams?: {
@@ -88,10 +87,7 @@ const TransactionsPage = async ({ searchParams }: TransactionsPageProps) => {
       <div className="space-y-6 overflow-hidden p-6">
         {/* TITULO E BOTÃO */}
         <div className="flex h-6 w-full items-center justify-between">
-          <div className="flex items-center gap-2">
-            <RouterBack />
-            <h1 className="text-2xl font-bold">Transações</h1>
-          </div>
+          <h1 className="text-2xl font-bold">Transações</h1>
           <div className="hidden flex-row gap-2 md:flex">
             <FilterTransactionType filterTransactionType={filterType} />
             <SelectPageSize pageSize={rawPageSize} />

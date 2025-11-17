@@ -58,8 +58,16 @@ const SummaryCard = ({
         </div>
 
         {/* Desktop */}
-        <div className="hidden w-full items-center justify-between md:flex">
-          <div className="flex gap-2">
+        <div
+          className={clsx(
+            "hidden w-full flex-col-reverse justify-between sm:flex lg:flex-row",
+            {
+              "items-center": isSmall,
+            },
+          )}
+        >
+          {/* <div className="hidden w-full flex-col-reverse items-center justify-between sm:flex lg:flex-row"> */}
+          <div className="flex justify-normal gap-2">
             <div className="flex-shrink-0 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-5 sm:[&>svg]:w-5">
               {icon}
             </div>
@@ -85,7 +93,7 @@ const SummaryCard = ({
       <CardContent className="flex justify-between">
         <p
           className={clsx("font-bold", {
-            "text-sm sm:text-2xl": isSmall,
+            "text-sm sm:text-xl lg:text-2xl": isSmall,
             "text-xl sm:text-4xl": !isSmall,
           })}
         >
