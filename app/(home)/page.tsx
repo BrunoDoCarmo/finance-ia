@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import SummaryCards from "./_components/summary-cards";
 import Navbar from "../_components/navbar";
 import TimeSelect from "./_components/time-select";
-import { isMatch } from "date-fns";
 import TransactionPieChart from "./_components/transactions-pie-chart";
 import { getDashboard } from "../_data/get-dashboard";
 import ExpensesPerCategory from "./_components/expenses-per-category";
@@ -12,37 +11,40 @@ import LastTransactions from "./_components/last-transactions";
 
 interface HomeProps {
   searchParams: {
-    month: string;
-    year: string;
+    month?: string;
+    year?: string;
   };
 }
+
+// Criado fora do componente para não ser recalculado
+const CURRENT_YEAR = new Date().getFullYear();
+const YEAR_OPTIONS = Array.from({ length: 11 }, (_, i) => {
+  const y = String(CURRENT_YEAR - i);
+  return { value: y, label: y };
+});
+
+// Funções mais leves de validação
+const isValidMonth = (m?: string) =>
+  !!m && /^[0-9]{2}$/.test(m) && Number(m) >= 1 && Number(m) <= 12;
+
+const isValidYear = (y?: string) =>
+  !!y && YEAR_OPTIONS.some((opt) => opt.value === y);
 
 const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   const { userId } = await auth();
   if (!userId) redirect("/login");
 
-  const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
-  const currentYear = String(new Date().getFullYear());
+  const fallbackMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+  const fallbackYear = String(CURRENT_YEAR);
 
-  const YEAR_OPTIONS = Array.from({ length: 11 }, (_, i) => {
-    const year = String(new Date().getFullYear() - i);
-    return { value: year, label: year };
-  });
-
-  // Verifica se o mês e ano são válidos (mês entre 01 e 12, ano numérico de 4 dígitos)
-  const isValidMonth =
-    month && /^[0-9]{2}$/.test(month) && +month >= 1 && +month <= 12;
-  const isValidYear =
-    year &&
-    /^[0-9]{4}$/.test(year) &&
-    YEAR_OPTIONS.some((option) => option.value === year);
-
-  const validMonth = month && isMatch(month, "MM") ? month : currentMonth;
-  const validYear = year && isMatch(year, "yyyy") ? year : currentYear;
-
-  if (!isValidMonth || !isValidYear) {
-    redirect(`?month=${currentMonth}&year=${currentYear}`);
+  // Se inválidos → redireciona para valores padrão
+  if (!isValidMonth(month) || !isValidYear(year)) {
+    return redirect(`?month=${fallbackMonth}&year=${fallbackYear}`);
   }
+
+  // Sempre válidos aqui
+  const validMonth = month!;
+  const validYear = year!;
 
   const dashboard = await getDashboard(validMonth, validYear);
 

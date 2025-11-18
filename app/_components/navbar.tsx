@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ChevronRight, Menu, X } from "lucide-react";
 import { ThemedToggle } from "./themed-toggle";
 import ThemedLogo from "./themed-logo";
 import UserButtonComponent from "./user-button";
@@ -16,95 +16,109 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState<string | null>(null);
 
-  const toggleSubmenu = (label: string) => {
-    setSubmenuOpen(submenuOpen === label ? null : label);
-  };
+  const toggleMenu = useCallback(() => {
+    setMenuOpen((prev) => !prev);
+  }, []);
 
-  const links = [
+  const toggleSubmenu = useCallback((label: string) => {
+    setSubmenuOpen((prev) => (prev === label ? null : label));
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+    setSubmenuOpen(null);
+  }, []);
+
+  /** Memoriza os links para não recriar a cada render */
+  // Tipos seguros para os links
+  type NavLink =
+    | { href: string; label: string }
+    | { label: string; submenu: { href: string; label: string }[] };
+
+  const links: NavLink[] = [
     { href: "/", label: "Dashboard" },
     { href: "/transactions", label: "Transações" },
     { href: "/subscription", label: "Assinatura" },
+
     {
       label: "Cadastro",
       submenu: [
-        { href: "/register/client", label: "Cliente" },
-        { href: "/register/product", label: "Produto" },
-        { href: "/register/supplier", label: "Fornecedor" },
+        { href: "/register=client", label: "Cliente" },
+        { href: "/register=product", label: "Produto" },
+        { href: "/register=supplier", label: "Fornecedor" },
       ],
     },
+
     { href: "/financial", label: "Financeiro" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-gray-400 bg-background px-6 py-4 dark:border-white/10">
-      {/* ESQUERDA */}
       <div className="flex items-center gap-3">
         <ThemedLogo />
       </div>
 
-      {/* DIREITA */}
       <div className="flex items-center gap-4">
-        {/* BOTÃO HAMBURGUER */}
         <button
-          className="rounded-lg p-2 hover:bg-muted"
-          onClick={() => setMenuOpen(!menuOpen)}
+          className="rounded-lg p-2 transition-colors hover:bg-muted"
+          onClick={toggleMenu}
           aria-label="Abrir menu"
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* OVERLAY ESCURO AO ABRIR */}
-      {menuOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/40"
-          onClick={() => setMenuOpen(false)}
-        />
-      )}
-
-      {/* MENU MOBILE (RIGHT SIDEBAR) */}
+      {/* OVERLAY */}
       <div
         className={clsx(
-          "fixed right-0 top-0 z-50 h-full w-full transform bg-background shadow-xl transition-transform duration-300 lg:w-1/2 lg:max-w-[300px]",
+          "fixed inset-0 z-40 bg-black/65 transition-opacity duration-300",
+          menuOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0",
+        )}
+        onClick={closeMenu}
+      />
+
+      {/* MENU MOBILE */}
+      <div
+        className={clsx(
+          "fixed right-0 top-0 z-50 h-full w-full border-l border-gray-400 bg-background px-1 shadow-xl transition-transform duration-300 dark:border-white/10 lg:w-1/2 lg:max-w-[300px]",
           menuOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
-        {/* HEADER DO MENU */}
         <div className="flex items-center justify-between border-b px-4 py-4">
           <strong className="text-lg font-semibold">Menu</strong>
-          <Button onClick={() => setMenuOpen(false)}>
+          <Button onClick={closeMenu}>
             <X size={24} />
           </Button>
         </div>
 
-        {/* LINKS */}
-        <div className="flex flex-col">
+        <div className="flex flex-col divide-y divide-gray-300 overflow-hidden border border-gray-300 dark:divide-white/15 dark:border-white/15">
           {links.map((link) => {
-            // SE TIVER SUBMENU
-            if (link.submenu) {
+            if ("submenu" in link) {
               const isOpen = submenuOpen === link.label;
-
               return (
-                <div key={link.label} className="w-full border-b">
-                  {/* BOTÃO PRINCIPAL DO SUBMENU */}
+                <div key={link.label} className="w-full">
                   <button
                     onClick={() => toggleSubmenu(link.label)}
-                    className="flex w-full items-center justify-between px-6 py-4 text-sm font-medium"
+                    className={clsx(
+                      "flex w-full items-center justify-between px-6 py-2 text-sm transition-colors",
+                      pathname === link.label
+                        ? "bg-primary/20 font-bold text-primary dark:bg-primary/25"
+                        : "hover:bg-gray-200 hover:text-primary dark:hover:bg-muted/40",
+                    )}
                   >
                     {link.label}
-
-                    {/* ÍCONE QUE GIRA */}
                     <span
                       className={clsx(
                         "transition-transform",
                         isOpen ? "rotate-90" : "rotate-0",
                       )}
                     >
-                      ▶
+                      <ChevronRight size={16} />
                     </span>
                   </button>
 
-                  {/* ITENS DO SUBMENU */}
                   <div
                     className={clsx(
                       "overflow-hidden transition-all duration-300",
@@ -115,8 +129,13 @@ const Navbar = () => {
                       <Link
                         key={sub.href}
                         href={sub.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="block w-full px-10 py-3 text-sm text-gray-600 hover:text-primary dark:text-gray-300"
+                        onClick={closeMenu}
+                        className={clsx(
+                          "flex w-full items-center justify-between px-6 py-2 text-sm transition-colors",
+                          pathname === sub.href
+                            ? "bg-primary/20 font-bold text-primary dark:bg-primary/25"
+                            : "hover:bg-gray-200 hover:text-primary dark:hover:bg-muted/40",
+                        )}
                       >
                         {sub.label}
                       </Link>
@@ -126,17 +145,16 @@ const Navbar = () => {
               );
             }
 
-            // LINKS NORMAIS
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={closeMenu}
                 className={clsx(
-                  "w-full border-b px-6 py-4 text-sm",
+                  "w-full px-6 py-2 text-sm transition-colors",
                   pathname === link.href
-                    ? "font-bold text-primary"
-                    : "hover:text-primary",
+                    ? "bg-primary/20 font-bold text-primary dark:bg-primary/25"
+                    : "hover:bg-gray-200 hover:text-primary dark:hover:bg-muted/40",
                 )}
               >
                 {link.label}
@@ -145,8 +163,7 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* RODAPÉ FIXO NO FUNDO DO MENU */}
-        <div className="absolute bottom-0 left-0 w-full border-t bg-background px-4 py-4">
+        <div className="absolute bottom-0 left-0 w-full border-t border-gray-400 bg-background px-2 py-2 dark:border-white/15">
           <div className="flex items-center justify-between">
             <UserButtonComponent />
             <div className="flex flex-col items-center gap-1">

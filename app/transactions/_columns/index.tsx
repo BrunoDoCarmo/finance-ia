@@ -1,6 +1,6 @@
 "use client";
 
-import { Transaction } from "@prisma/client";
+// import { Transaction } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import TransactionTypeBadge from "../_components/type-badge";
 import { Button } from "@/app/_components/ui/button";
@@ -25,8 +25,9 @@ import {
 } from "@/app/_components/ui/alert-dialog";
 import { formatCurrency } from "@/app/_utils/currency";
 import { dateNumeric } from "@/app/_utils/date";
+import type { SerializedTransaction } from "./types";
 
-export const transactionColumns: ColumnDef<Transaction>[] = [
+export const transactionColumns: ColumnDef<SerializedTransaction>[] = [
   {
     accessorKey: "name",
     header: "Nome",
@@ -53,7 +54,8 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "date",
     header: "Data",
-    cell: ({ row: { original: transaction } }) => dateNumeric(transaction.date),
+    cell: ({ row: { original: transaction } }) =>
+      dateNumeric(new Date(transaction.date)),
   },
   {
     accessorKey: "amount",

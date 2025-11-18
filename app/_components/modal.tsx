@@ -19,17 +19,19 @@ interface ModalProps {
   cancelLabel?: string;
   onConfirm?: () => void;
   showCancel?: boolean;
+  classNameAction?: string;
 }
 
 const Modal = ({
   open,
   onOpenChange,
-  title = "Confirmação",
+  title,
   description,
-  confirmLabel = "Confirmar",
-  cancelLabel = "Cancelar",
-  showCancel = true,
+  confirmLabel,
+  cancelLabel,
+  showCancel,
   onConfirm,
+  classNameAction,
 }: ModalProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -53,7 +55,7 @@ const Modal = ({
           )}
           <AlertDialogAction
             onClick={onConfirm}
-            className="bg-danger text-white hover:bg-danger/80"
+            className={`text-white ${classNameAction}`}
           >
             {confirmLabel}
           </AlertDialogAction>
