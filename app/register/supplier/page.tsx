@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "../../_components/navbar";
 import { Button } from "../../_components/ui/button";
 import { ListFilter, PlusIcon } from "lucide-react";
 
@@ -11,7 +10,6 @@ const SupplierPage = () => {
   const [openFilters, setOpenFilters] = useState(false);
   return (
     <>
-      <Navbar />
       <div className="space-y-6 overflow-hidden p-6">
         {/* TITULO E BOTÃO */}
         <div className="flex h-6 w-full items-center justify-between">

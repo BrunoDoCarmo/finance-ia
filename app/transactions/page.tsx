@@ -4,7 +4,6 @@ import { transactionColumns } from "./_columns";
 import AddTransactionButton from "../_components/add-transaction-button";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import Navbar from "../_components/navbar";
 import { ScrollArea } from "../_components/ui/scroll-area";
 import { Pagination } from "../_components/pagination";
 import { TransactionType } from "@prisma/client";
@@ -69,7 +68,6 @@ const TransactionsPage = async ({ searchParams }: TransactionsPageProps) => {
 
   return (
     <>
-      <Navbar />
       <div className="space-y-6 overflow-hidden p-6">
         {/* TITULO E BOTÃO */}
         <div className="flex h-6 w-full items-center justify-between">

@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 import SummaryCards from "./_components/summary-cards";
-import Navbar from "../_components/navbar";
 import TimeSelect from "./_components/time-select";
 import TransactionPieChart from "./_components/transactions-pie-chart";
 import { getDashboard } from "../_data/get-dashboard";
@@ -49,29 +48,26 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   const dashboard = await getDashboard(validMonth, validYear);
 
   return (
-    <>
-      <Navbar />
-      <div className="flex flex-col space-y-6 p-6 lg:overflow-hidden">
-        <div className="flex h-6 w-full items-center justify-between">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-          <TimeSelect />
-        </div>
-        <div className="grid grid-rows-[1fr] gap-3 lg:h-screen lg:grid-cols-[2fr,1fr] lg:overflow-hidden">
-          <div className="flex flex-col gap-3 overflow-hidden">
-            <SummaryCards month={validMonth} year={validYear} {...dashboard} />
-            <div className="flex h-full grid-rows-1 flex-col gap-3 overflow-hidden lg:grid lg:grid-cols-3">
-              <TransactionPieChart {...dashboard} />
-              <ExpensesPerCategory
-                expersePerCategory={dashboard.totalExpensePerCategory}
-              />
-            </div>
-          </div>
-          <LastTransactions
-            lastTransactions={dashboard.serializedLastTransaction}
-          />
-        </div>
+    <div className="flex flex-col space-y-6 p-6 lg:overflow-hidden">
+      <div className="flex h-6 w-full items-center justify-between">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <TimeSelect />
       </div>
-    </>
+      <div className="grid grid-rows-[1fr] gap-3 lg:h-screen lg:grid-cols-[2fr,1fr] lg:overflow-hidden">
+        <div className="flex flex-col gap-3 overflow-hidden">
+          <SummaryCards month={validMonth} year={validYear} {...dashboard} />
+          <div className="flex h-full grid-rows-1 flex-col gap-3 overflow-hidden lg:grid lg:grid-cols-3">
+            <TransactionPieChart {...dashboard} />
+            <ExpensesPerCategory
+              expersePerCategory={dashboard.totalExpensePerCategory}
+            />
+          </div>
+        </div>
+        <LastTransactions
+          lastTransactions={dashboard.serializedLastTransaction}
+        />
+      </div>
+    </div>
   );
 };
 
