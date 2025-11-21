@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-import { createStripeCheckout } from "../_actions/create-stripe-ckeout";
+import { createStripeCheckout } from "../_actions/create-stripe-checkout";
 import { loadStripe } from "@stripe/stripe-js";
 
 const AcquirePlanButton = () => {
