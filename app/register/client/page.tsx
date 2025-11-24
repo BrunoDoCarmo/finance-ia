@@ -5,6 +5,7 @@ import { ListFilter, PlusIcon } from "lucide-react";
 
 import { useState } from "react";
 import Modal from "@/app/_components/modal";
+import Link from "next/link";
 
 const ClientPage = () => {
   const [openFilters, setOpenFilters] = useState(false);
@@ -22,9 +23,11 @@ const ClientPage = () => {
               <ListFilter />
               Filtros
             </Button>
-            <Button>
-              <PlusIcon />
-              Novo Cadastro
+            <Button asChild>
+              <Link href="/register=newClient">
+                <PlusIcon />
+                Novo Cadastro
+              </Link>
             </Button>
           </div>
         </div>

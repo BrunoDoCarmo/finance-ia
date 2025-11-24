@@ -2,6 +2,7 @@ import ClientPage from "../register/client/page";
 import ProductPage from "../register/product/page";
 import SupplierPage from "../register/supplier/page";
 import NotFound from "../not-found";
+import FormClient from "../register/client/_components/form-client";
 
 interface Props {
   params: {
@@ -36,6 +37,9 @@ export default function RegisterSlugRouter({ params }: Props) {
 
     case "supplier":
       return <SupplierPage />;
+
+    case "newClient":
+      return <FormClient />;
 
     default:
       return (
